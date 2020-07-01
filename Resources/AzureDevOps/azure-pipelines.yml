@@ -1,7 +1,7 @@
 variables:
-    SolutionBaseName: 'DFC.Api.Visits'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+  SolutionBaseName: 'DFC.Api.Visits'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
 
 resources:
   repositories:
@@ -9,8 +9,14 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.8.5
+    ref: refs/tags/v1.11.2
     endpoint: 'GitHub (ESFA)'
+
+pool:
+  name: NCS - CI and CD
+  demands:
+    - msbuild
+    - visualstudio
 
 stages:
 - stage: Build
@@ -26,6 +32,6 @@ stages:
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
         SolutionBaseName: $(SolutionBaseName)
-        BuildPlatform: 'any cpu'
-        BuildConfiguration: 'release'
-        DotNetCoreVersion: ‘3.1.100’
+        BuildPlatform: $(BuildPlatform)
+        BuildConfiguration: $(BuildConfiguration)
+        DotNetCoreVersion: '3.1.100'
