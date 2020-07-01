@@ -1,0 +1,57 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "Neo4jUrl": {
+        "value": "__neo4jUrl__"
+      },
+      "Neo4jUser": {
+        "value": "__neo4jUser__"
+      },
+      "Neo4jPassword": {
+        "value": "__neo4jPassword__"
+      },
+      "appSharedStorageAccountName": {
+        "value": "__appSharedStorageAccountName__"
+      },
+      "appSharedResourceGroup": {
+        "value": "__appSharedResourceGroup__"
+      },
+      "aspTier": {
+        "value": "__aspTier__"
+      },
+      "FunctionAppInsightName": {
+        "value": "__FunctionAppInsightName__"
+      },
+      "aspSize": {
+        "value": "__aspSize__"
+      },
+      "sharedAppServicePlanName": {
+        "value": "__sharedAppServicePlanName__"
+      },
+      "sharedAppServicePlanResourceGroup": {
+        "value": "__appSharedResourceGroup__"
+      },
+      "FunctionAppName": {
+        "value": "__FunctionAppName__"
+      },
+      "ApimProductInstanceName": {
+        "value": "__ApimProductInstanceName__"
+      },
+      "ApimResourceGroup": {
+        "value": "__SharedResourceGroupName__"
+      },
+      "ApiName": {
+        "value": "__ApiName__"
+      },
+      "ApiVersionNumber": {
+        "value": "__ApiVersion__"
+      },
+      "ApimLoggerName": {
+        "value": "__ApimLoggerName__"
+      },
+      "ApimServiceName": {
+        "value": "__ApimServiceName__"
+      }
+    }
+  }
