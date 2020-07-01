@@ -1,0 +1,57 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "appSharedResourceGroup": {
+        "value": "dfc-dev-app-sharedresources-rg"
+      },
+      "sharedAppServicePlanName": {
+        "value": "dfc-dev-app-shared-asp"
+      },
+      "sharedAppServicePlanResourceGroup": {
+        "value": "dfc-dev-app-sharedresources-rg"
+      },
+      "aspTier": {
+        "value": "Standard"
+      },
+      "aspSize": {
+        "value": "1"
+      },
+      "FunctionAppName": {
+        "value": "dfc-dev-funcapp-v1-fa"
+      },
+      "FunctionAppInsightName": {
+        "value": "dfc-dev-funcapp-v1-ai"
+      },
+      "ApimProductInstanceName": {
+        "value": "test-api-product"
+      },
+      "Neo4jUrl": {
+        "value": "http://some-database-instance/"
+      },
+      "Neo4jUser": {
+        "value": "someUsername"
+      },
+      "Neo4jPassword": {
+        "value": "not-a-real-password"
+      },
+      "appSharedStorageAccountName": {
+        "value": "dfcdevappsharedstr"
+      },
+      "ApimResourceGroup": {
+        "value": "dfc-test-template-rg"
+      },
+      "ApimServiceName": {
+        "value": "an-apim-instance"
+      },
+      "ApiName": {
+        "value": "api-name"
+      },
+      "ApiVersionNumber": {
+        "value": "v1"
+      },
+      "ApimLoggerName": {
+        "value": "some-apim-logger"
+      }
+    }
+  }
