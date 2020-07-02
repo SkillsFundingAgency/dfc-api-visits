@@ -42,3 +42,111 @@ stages:
         DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
+
+    #- task: PublishPipelineArtifact@1
+      #displayName: Publish OpenAPI docs to Pipeline Artifact
+      #inputs:
+        #targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
+        #artifactName: DFC.Api.Visits.Resources.OpenAPIDocs
+
+    #- task: PublishPipelineArtifact@1
+      #displayName: Publish API import script to Pipeline Artifact
+      #inputs:
+        #targetPath: "$(System.DefaultWorkingDirectory)/Resources/Scripts"
+        #artifactName: DFC.Api.Visits.Resources.Scripts
+
+    #- task: PublishPipelineArtifact@1
+      #displayName: Publish apim policies
+      #inputs:
+        #targetPath: "$(System.DefaultWorkingDirectory)/Resources/ApimPolicy"
+        #artifactName: DFC.Api.Visits.Resources.ApimPolicies
+
+- stage: DeployToDevVisits
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to DEV_VISITS
+  variables:
+  - template: VariableTemplates/DevEnvironmentVariables.yml
+  - group: dfc-shared-all
+  - group: dfc-api-visits-dev
+  - group: dfc-app-integrationtests-all
+  - group: dfc-shared-dev
+  - group: dfc-app-shared-all
+  - group: dfc-stax-shared-dev
+  - group: dfc-app-shared-dev
+  - group: 'KeyVault - dfc-dev-shared-kv'
+  - name: WebAppPrefix
+    value: dfc-dev
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: 'dfc-dev-api-visits-rg'
+      PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
+      #ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      #ApimProductId: 'visits'
+      #ApimLoggerName: 'visits-logger'
+      #APIProductInstanceName: 'visits'
+      ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
+      #ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      #SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      SharedResourceGroup: 'dfc-dev-shared-rg'
+      #ApimServiceName: 'dfc-dev-shared-apim'
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      FunctionAppName: 'dfc-dev-api-visits-fa'
+      EnvironmentName: DEV_VISITS
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
+      # The top level -`s here defines an array of "something"
+      # The inner level -'s defines an array of mappings.
+      #Apis: 
+        #-
+          #- name: GetVisits
+            #azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+
+- stage: DeployToSitVisits
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to SIT_VISITS
+  variables:
+  - template: VariableTemplates/SitEnvironmentVariables.yml
+  - group: dfc-shared-all
+  - group: dfc-api-visits-sit
+  - group: dfc-app-integrationtests-all
+  - group: dfc-shared-sit
+  - group: dfc-app-shared-all
+  - group: dfc-stax-shared-sit
+  - group: dfc-app-shared-sit
+  - group: 'KeyVault - dfc-sit-shared-kv'
+  - name: WebAppPrefix
+    value: dfc-sit
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: 'dfc-sit-api-visits-rg'
+      PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
+      #ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      #ApimProductId: 'visits'
+      #ApimLoggerName: 'visits-logger'
+      #APIProductInstanceName: 'visits'
+      ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
+      #ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      #SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      SharedResourceGroup: 'dfc-sit-shared-rg'
+      #ApimServiceName: 'dfc-sit-shared-apim'
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      FunctionAppName: 'dfc-sit-api-visits-fa'
+      EnvironmentName: SIT_VISITS
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
+      # The top level -`s here defines an array of "something"
+      # The inner level -'s defines an array of mappings.
+      #Apis: 
+        #-
+          #- name: GetVisits
+            #azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
