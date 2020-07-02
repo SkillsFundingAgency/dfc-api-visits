@@ -57,4 +57,4 @@ steps:
      #Write-Host "Filepath: ${{ parameters.PolicyFilePath }}"
      #Set-AzApiManagementPolicy -Context $Context -Format application/vnd.ms-azure-apim.policy.raw+xml -ProductId "${{ parameters.ApimProductId }}" -PolicyFilePath "${{ parameters.PolicyFilePath }}/DefaultApimPolicy.xml"  -Verbose
 
-    azurePowerShellVersion: LatestVersion
+    #azurePowerShellVersion: LatestVersion
