@@ -40,25 +40,25 @@ steps:
     Write-Host "##vso[task.setvariable variable=FunctionAppUrl]https://${{ parameters.WebAppName }}.${{ parameters.FunctionAppDomain }}"
   displayName: "Set full hostname as variable"
 
-- task: esfadevops.Tokenization.custom-build-task.Tokenization@0
-  displayName: 'Tokenization: Transform file ${{ parameters.FunctionType }}OpenApi.txt'
-  inputs:
-    SourcePath: '${{ parameters.SpecificationPath }}'
-    TargetFileNames: '${{ parameters.FunctionType }}OpenApi.txt'
+#- task: esfadevops.Tokenization.custom-build-task.Tokenization@0
+  #displayName: 'Tokenization: Transform file ${{ parameters.FunctionType }}OpenApi.txt'
+  #inputs:
+    #SourcePath: '${{ parameters.SpecificationPath }}'
+    #TargetFileNames: '${{ parameters.FunctionType }}OpenApi.txt'
 
-- task: AzurePowerShell@4
-  displayName: 'Import OpenAPI specification'
-  inputs:
-    azureSubscription: '${{ parameters.AzureSubscription }}'
-    ScriptPath: '${{ parameters.ApimImportScript }}'
-    ScriptArguments: "-ApimResourceGroup '${{ parameters.SharedResourceGroup }}' -InstanceName '${{ parameters.ApimServiceName }}' -ApiName '${{ parameters.FunctionType }}' -OpenApiSpecificationFile '${{ parameters.SpecificationPath }}/${{ parameters.FunctionType }}OpenApi.txt' -ApiPath 'visits/${{ parameters.FunctionType }}'"
-    azurePowerShellVersion: LatestVersion
+#- task: AzurePowerShell@4
+  #displayName: 'Import OpenAPI specification'
+  #inputs:
+    #azureSubscription: '${{ parameters.AzureSubscription }}'
+    #ScriptPath: '${{ parameters.ApimImportScript }}'
+    #ScriptArguments: "-ApimResourceGroup '${{ parameters.SharedResourceGroup }}' -InstanceName '${{ parameters.ApimServiceName }}' -ApiName '${{ parameters.FunctionType }}' -OpenApiSpecificationFile '${{ parameters.SpecificationPath }}/${{ parameters.FunctionType }}OpenApi.txt' -ApiPath 'visits/${{ parameters.FunctionType }}'"
+    #azurePowerShellVersion: LatestVersion
 
-- task: AzurePowerShell@4
-  displayName: 'Set-ApimProductAndLogger'
-  condition: ne( '${{ parameters.ApimLoggerName }}', '')
-  inputs:
-    azureSubscription: '${{ parameters.AzureSubscription }}'
-    ScriptPath: '${{ parameters.PSScriptPath }}/Set-ApimProductAndLogger.ps1'
-    ScriptArguments: '-ApimResourceGroup ${{ parameters.SharedResourceGroup }} -InstanceName ${{ parameters.ApimServiceName }} -ApiId ${{ parameters.FunctionType }} -ApiProductId ${{ parameters.ApimProductId }} -ApimLoggerName ${{ parameters.ApimLoggerName }}'
-    azurePowerShellVersion: LatestVersion
+#- task: AzurePowerShell@4
+  #displayName: 'Set-ApimProductAndLogger'
+  #condition: ne( '${{ parameters.ApimLoggerName }}', '')
+  #inputs:
+    #azureSubscription: '${{ parameters.AzureSubscription }}'
+    #ScriptPath: '${{ parameters.PSScriptPath }}/Set-ApimProductAndLogger.ps1'
+    #ScriptArguments: '-ApimResourceGroup ${{ parameters.SharedResourceGroup }} -InstanceName ${{ parameters.ApimServiceName }} -ApiId ${{ parameters.FunctionType }} -ApiProductId ${{ parameters.ApimProductId }} -ApimLoggerName ${{ parameters.ApimLoggerName }}'
+    #azurePowerShellVersion: LatestVersion
