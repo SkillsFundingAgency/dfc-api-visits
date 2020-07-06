@@ -103,7 +103,7 @@ stages:
       # The inner level -'s defines an array of mappings.
       Apis: 
         -
-          - name: AddVisits
+          - name: AddVisit
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
@@ -148,5 +148,5 @@ stages:
       # The inner level -'s defines an array of mappings.
       Apis: 
         -
-          - name: AddVisits
+          - name: AddVisit
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
