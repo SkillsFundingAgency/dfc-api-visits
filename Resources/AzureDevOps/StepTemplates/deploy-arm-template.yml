@@ -47,14 +47,14 @@ steps:
     Contents: parameters.json
   condition: always()
 
-#- task: AzurePowerShell@4
-  #displayName: 'Azure PowerShell: Set APIM Product Level Policy'
-  #inputs:
-    #azureSubscription: '${{ parameters.AzureSubscription }}'
-    #ScriptType: InlineScript
-    #Inline: |
-     #$Context = New-AzApiManagementContext -ResourceGroupName "$(SharedResourceGroupName)" -ServiceName "$(ApimServiceName)"
-     #Write-Host "Filepath: ${{ parameters.PolicyFilePath }}"
-     #Set-AzApiManagementPolicy -Context $Context -Format application/vnd.ms-azure-apim.policy.raw+xml -ProductId "${{ parameters.ApimProductId }}" -PolicyFilePath "${{ parameters.PolicyFilePath }}/DefaultApimPolicy.xml"  -Verbose
+- task: AzurePowerShell@4
+  displayName: 'Azure PowerShell: Set APIM Product Level Policy'
+  inputs:
+    azureSubscription: '${{ parameters.AzureSubscription }}'
+    ScriptType: InlineScript
+    Inline: |
+     $Context = New-AzApiManagementContext -ResourceGroupName "$(SharedResourceGroupName)" -ServiceName "$(ApimServiceName)"
+     Write-Host "Filepath: ${{ parameters.PolicyFilePath }}"
+     Set-AzApiManagementPolicy -Context $Context -Format application/vnd.ms-azure-apim.policy.raw+xml -ProductId "${{ parameters.ApimProductId }}" -PolicyFilePath "${{ parameters.PolicyFilePath }}/DefaultApimPolicy.xml"  -Verbose
 
-    #azurePowerShellVersion: LatestVersion
+    azurePowerShellVersion: LatestVersion

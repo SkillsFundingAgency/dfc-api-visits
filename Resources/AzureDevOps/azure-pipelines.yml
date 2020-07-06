@@ -43,23 +43,23 @@ stages:
         PublishWebApp: true
         TestSuffix: UnitTests
 
-    #- task: PublishPipelineArtifact@1
-      #displayName: Publish OpenAPI docs to Pipeline Artifact
-      #inputs:
-        #targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
-        #artifactName: DFC.Api.Visits.Resources.OpenAPIDocs
+    - task: PublishPipelineArtifact@1
+      displayName: Publish OpenAPI docs to Pipeline Artifact
+      inputs:
+        targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
+        artifactName: DFC.Api.Visits.Resources.OpenAPIDocs
 
-    #- task: PublishPipelineArtifact@1
-      #displayName: Publish API import script to Pipeline Artifact
-      #inputs:
-        #targetPath: "$(System.DefaultWorkingDirectory)/Resources/Scripts"
-        #artifactName: DFC.Api.Visits.Resources.Scripts
+    - task: PublishPipelineArtifact@1
+      displayName: Publish API import script to Pipeline Artifact
+      inputs:
+        targetPath: "$(System.DefaultWorkingDirectory)/Resources/Scripts"
+        artifactName: DFC.Api.Visits.Resources.Scripts
 
-    #- task: PublishPipelineArtifact@1
-      #displayName: Publish apim policies
-      #inputs:
-        #targetPath: "$(System.DefaultWorkingDirectory)/Resources/ApimPolicy"
-        #artifactName: DFC.Api.Visits.Resources.ApimPolicies
+    - task: PublishPipelineArtifact@1
+      displayName: Publish apim policies
+      inputs:
+        targetPath: "$(System.DefaultWorkingDirectory)/Resources/ApimPolicy"
+        artifactName: DFC.Api.Visits.Resources.ApimPolicies
 
 - stage: DeployToDevVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -83,28 +83,28 @@ stages:
       EnvironmentTag: '$(EnvironmentTag)'
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
-      ResourceGroup: 'dfc-dev-api-visits-rg'
+      ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
-      #ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
-      #ApimProductId: 'visits'
-      #ApimLoggerName: 'visits-logger'
-      #APIProductInstanceName: 'visits'
+      ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      ApimProductId: '$(ApimProductId)'
+      ApimLoggerName: '$(ApimLoggerName)'
+      APIProductInstanceName: '$(ApimProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
-      #ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      #SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
-      SharedResourceGroup: 'dfc-dev-shared-rg'
-      #ApimServiceName: 'dfc-dev-shared-apim'
+      ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      SharedResourceGroup: '$(SharedResourceGroup)'
+      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: 'dfc-dev-api-visits-fa'
+      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: DEV_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
       # The inner level -'s defines an array of mappings.
-      #Apis: 
-        #-
-          #- name: GetVisits
-            #azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+      Apis: 
+        -
+          - name: GetVisits
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -128,25 +128,25 @@ stages:
       EnvironmentTag: '$(EnvironmentTag)'
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
-      ResourceGroup: 'dfc-sit-api-visits-rg'
+      ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
-      #ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
-      #ApimProductId: 'visits'
-      #ApimLoggerName: 'visits-logger'
-      #APIProductInstanceName: 'visits'
+      ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      ApimProductId: '$(ApimProductId)'
+      ApimLoggerName: '$(ApimLoggerName)'
+      APIProductInstanceName: '$APIProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
-      #ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      #SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
-      SharedResourceGroup: 'dfc-sit-shared-rg'
-      #ApimServiceName: 'dfc-sit-shared-apim'
+      ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      SharedResourceGroup: '$(SharedResourceGroup)'
+      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: 'dfc-sit-api-visits-fa'
+      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: SIT_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
       # The inner level -'s defines an array of mappings.
-      #Apis: 
-        #-
-          #- name: GetVisits
-            #azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+      Apis: 
+        -
+          - name: GetVisits
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
