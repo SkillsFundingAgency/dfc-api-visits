@@ -1,20 +1,36 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AzureFunctionsVersion>
-    </AzureFunctionsVersion>
-    <ProjectGuid>{D3864996-08E3-4905-AC70-37283CC66004}</ProjectGuid>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.6" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="host.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="local.settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<AzureFunctionsVersion>v3</AzureFunctionsVersion>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<ProjectGuid>{D3864996-08E3-4905-AC70-37283CC66004}</ProjectGuid>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DFC.ServiceTaxonomy.Neo4j" Version="0.1.233" />
+		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.8" />
+		<PackageReference Include="Neo4j.Driver" Version="4.1.0" />
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="8.9.0.19135">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="UAParser" Version="3.1.44" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="host.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="local.settings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="appsettings*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Neo4J\" />
+	</ItemGroup>
 </Project>
