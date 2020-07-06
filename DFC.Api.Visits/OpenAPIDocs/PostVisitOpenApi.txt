@@ -2,33 +2,46 @@
 info:
   title: DFC Visits API
   description: 'Creates a new visit record'
-  version: 1.0.0
+  version: '1.0.0'
 servers:
-- url: __FunctionAppUrl__
+  - url: __FunctionAppUrl__
 tags:
-- name: Add Visit
-  description: creates a new visit record
+  - name: Add Visit
+    description: creates a new visit record
 paths:
   /api/CreateVisit:
     post:
       tags:
-      - Content
-      summary: Creates a new visit record.
-      description: Returns all of a particular content type.
-      operationId: GetAllByContentType
+      - Add Visit
+      description: Create a new visit record in Neo4J
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RequestPath:
+                  type: string
+                VisitTime:
+                  type: string
+                Referer:
+                  type: string
+                UserAgent:
+                  type: string
+                SessionId:
+                  type: string
+            examples:
+              '0':
+                value: "{\r\n    \"SessionId\": \"60df4b45-a709-4bfa-8ab3-a2e8193670c9\",\r\n    \"Referer\": \"/\",\r\n    \"UserAgent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36\",\r\n    \"RequestPath\": \"/pages\",\r\n    \"VisitTime\": \"2020-07-06T10:00:19.2057887Z\"\r\n}"
       responses:
-        204:
-          description: Visit created successfully
-          content: {}
-        400:
+        '200':
+          description: Auto generated using Swagger Inspector
+        '400':
           description: Missing data from body or parameters have not been supplied for query.
           content: {}
-        422:
+        '422':
           description: Unprocessable Entity - Unable to read/deserialize data.
           content: {}
-        500:
+        '500':
           description: Missing App Settings or Config Files.
           content: {}
-components:
-  schemas: {}
-  
