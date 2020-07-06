@@ -1,0 +1,34 @@
+﻿openapi: 3.0.1
+info:
+  title: DFC Visits API
+  description: 'Creates a new visit record'
+  version: 1.0.0
+servers:
+- url: __FunctionAppUrl__
+tags:
+- name: Add Visit
+  description: creates a new visit record
+paths:
+  /api/CreateVisit:
+    post:
+      tags:
+      - Content
+      summary: Creates a new visit record.
+      description: Returns all of a particular content type.
+      operationId: GetAllByContentType
+      responses:
+        204:
+          description: Visit created successfully
+          content: {}
+        400:
+          description: Missing data from body or parameters have not been supplied for query.
+          content: {}
+        422:
+          description: Unprocessable Entity - Unable to read/deserialize data.
+          content: {}
+        500:
+          description: Missing App Settings or Config Files.
+          content: {}
+components:
+  schemas: {}
+  
