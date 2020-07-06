@@ -83,19 +83,19 @@ stages:
       EnvironmentTag: '$(EnvironmentTag)'
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
-      ResourceGroup: 'dfc-dev-api-visits-rg'
+      ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
       ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
-      ApimProductId: 'visits'
-      ApimLoggerName: 'visits-logger'
-      APIProductInstanceName: 'visits'
+      ApimProductId: '$(ApimProductId)'
+      ApimLoggerName: '$(ApimLoggerName)'
+      APIProductInstanceName: '$(ApimProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
       ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
-      SharedResourceGroup: 'dfc-dev-shared-rg'
-      ApimServiceName: 'dfc-dev-shared-apim'
+      SharedResourceGroup: '$(SharedResourceGroup)'
+      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: 'dfc-dev-api-visits-fa'
+      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: DEV_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
@@ -128,19 +128,19 @@ stages:
       EnvironmentTag: '$(EnvironmentTag)'
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
-      ResourceGroup: 'dfc-sit-api-visits-rg'
+      ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
       ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
-      ApimProductId: 'visits'
-      ApimLoggerName: 'visits-logger'
-      APIProductInstanceName: 'visits'
+      ApimProductId: '$(ApimProductId)'
+      ApimLoggerName: '$(ApimLoggerName)'
+      APIProductInstanceName: '$APIProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
       ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
       SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
-      SharedResourceGroup: 'dfc-sit-shared-rg'
-      ApimServiceName: 'dfc-sit-shared-apim'
+      SharedResourceGroup: '$(SharedResourceGroup)'
+      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: 'dfc-sit-api-visits-fa'
+      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: SIT_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
