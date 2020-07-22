@@ -13,24 +13,29 @@ namespace DFC.Api.Visits.Function
 {
     public class CreateVisit
     {
-        private readonly INeo4JService _neo4JService;
+        private readonly INeo4JService neo4JService;
 
         public CreateVisit(INeo4JService neo4JService)
         {
-            _neo4JService = neo4JService;
+            this.neo4JService = neo4JService;
         }
-
 
         [FunctionName("CreateVisit")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CreateVisit")]
             HttpRequest req, ILogger log)
         {
-            var content = await new StreamReader(req.Body).ReadToEndAsync();
+
+            var content = string.Empty;
+
+            using (var str = new StreamReader(req.Body))
+            {
+                content = await str.ReadToEndAsync().ConfigureAwait(false);
+            }
 
             var model = JsonConvert.DeserializeObject<CreateVisitRequest>(content);
 
-            await _neo4JService.InsertNewRequest(model);
+            await this.neo4JService.InsertNewRequest(model).ConfigureAwait(false);
 
             return new OkResult();
         }

@@ -1,17 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <ProjectGuid>{5835FA0D-F37C-4089-9130-03169B3D235E}</ProjectGuid>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="FakeItEasy" Version="6.1.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-    <PackageReference Include="coverlet.collector" Version="1.2.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DFC.Api.Visits\DFC.Api.Visits.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<CodeAnalysisRuleSet>../UnitTests.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+		<ProjectGuid>{5835FA0D-F37C-4089-9130-03169B3D235E}</ProjectGuid>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FakeItEasy" Version="6.1.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+		<PackageReference Include="xunit" Version="2.4.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+		<PackageReference Include="coverlet.collector" Version="1.2.0" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DFC.Api.Visits\DFC.Api.Visits.csproj" />
+	</ItemGroup>
 </Project>
