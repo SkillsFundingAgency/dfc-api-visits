@@ -28,13 +28,18 @@ namespace DFC.Api.Visits.Neo4J
             this.retentionDays = settings.Value.RetentionInDays;
         }
 
-        public async Task InsertNewRequest(CreateVisitRequest model)
+        public Task InsertNewRequest(CreateVisitRequest model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
+            return InsertNewRequestInternal(model);
+        }
+
+        private async Task InsertNewRequestInternal(CreateVisitRequest model)
+        {
             var parser = Parser.GetDefault();
             var userAgent = parser.Parse(model.UserAgent);
 

@@ -37,9 +37,17 @@ namespace DFC.Api.Visits.UnitTests
 
             A.CallTo(() => request.Body).Returns(new MemoryStream(bytearray));
 
-            await function.Run(request, A.Fake<ILogger>());
+            await function.Run(request);
 
             A.CallTo(() => neoService.InsertNewRequest(A<CreateVisitRequest>.Ignored)).MustHaveHappened();
+        }
+
+        [Fact]
+        public async Task WhenRequestNullThrowsException()
+        {
+            var neoService = A.Fake<INeo4JService>();
+            var function = new CreateVisit(neoService);
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await function.Run(null).ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

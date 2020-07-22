@@ -46,5 +46,19 @@ namespace DFC.Api.Visits.UnitTests.ServiceTests
             await service.InsertNewRequest(model).ConfigureAwait(false);
             A.CallTo(() => graphDatabase.Run(A<ICommand[]>.Ignored)).MustHaveHappened();
         }
+
+        [Fact]
+        public async Task WhenCreateVisitRequestNullThrowException()
+        {
+            var service = new Neo4JService(graphDatabase, provider, settings);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.InsertNewRequest(null).ConfigureAwait(false)).ConfigureAwait(false);
+        }
+
+        [Fact]
+        public async Task WhenSettingsNullThrowException()
+        {
+            Assert.Throws<ArgumentNullException>(() => new Neo4JService(graphDatabase, provider, null));
+        }
     }
 }

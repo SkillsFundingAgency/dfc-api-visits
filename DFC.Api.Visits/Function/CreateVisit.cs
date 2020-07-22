@@ -1,4 +1,5 @@
-﻿using DFC.Api.Visits.Models;
+﻿using System;
+using DFC.Api.Visits.Models;
 using DFC.Api.Visits.Neo4J;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,14 @@ namespace DFC.Api.Visits.Function
         [FunctionName("CreateVisit")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CreateVisit")]
-            HttpRequest req, ILogger log)
+            HttpRequest req)
         {
+            if (req == null)
+            {
+                throw new ArgumentNullException(nameof(req));
+            }
 
-            var content = string.Empty;
+            string content;
 
             using (var str = new StreamReader(req.Body))
             {
