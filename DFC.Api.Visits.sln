@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Api.Visits", "DFC.Api.Visits\DFC.Api.Visits.csproj", "{D3864996-08E3-4905-AC70-37283CC66004}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Api.Visits", "DFC.Api.Visits\DFC.Api.Visits.csproj", "{D3864996-08E3-4905-AC70-37283CC66004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Api.Visits.UnitTests", "DFC.Api.Visits.UnitTests\DFC.Api.Visits.UnitTests.csproj", "{5835FA0D-F37C-4089-9130-03169B3D235E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Api.Visits.UnitTests", "DFC.Api.Visits.UnitTests\DFC.Api.Visits.UnitTests.csproj", "{5835FA0D-F37C-4089-9130-03169B3D235E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13843964-9897-44C5-81F7-F6E12BF449C8}"
+	ProjectSection(SolutionItems) = preProject
+		DFC.Digital.CodeAnalysis.ruleset = DFC.Digital.CodeAnalysis.ruleset
+		stylecop.json = stylecop.json
+		UnitTests.CodeAnalysis.ruleset = UnitTests.CodeAnalysis.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D3864996-08E3-4905-AC70-37283CC66004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +48,11 @@ Global
 		{5835FA0D-F37C-4089-9130-03169B3D235E}.Release|x64.Build.0 = Release|Any CPU
 		{5835FA0D-F37C-4089-9130-03169B3D235E}.Release|x86.ActiveCfg = Release|Any CPU
 		{5835FA0D-F37C-4089-9130-03169B3D235E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C245C9E3-F634-436F-9B22-74B0E05208B6}
 	EndGlobalSection
 EndGlobal
