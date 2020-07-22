@@ -38,6 +38,13 @@ namespace DFC.Api.Visits.Neo4J
             return InsertNewRequestInternal(model);
         }
 
+        private static string GenerateVisitKey(Guid userId, string page)
+        {
+            var newGuid = Guid.NewGuid().ToString("D");
+
+            return $"{userId}{page}/{newGuid}";
+        }
+
         private async Task InsertNewRequestInternal(CreateVisitRequest model)
         {
             var parser = Parser.GetDefault();
@@ -68,13 +75,6 @@ namespace DFC.Api.Visits.Neo4J
                 $"CALL apoc.ttl.expireIn(parent,toInteger({this.retentionDays}),'d') return u";
 
             await this.graphDatabase.Run(customCommand).ConfigureAwait(false);
-        }
-
-        private static string GenerateVisitKey(Guid userId, string page)
-        {
-            var newGuid = Guid.NewGuid().ToString("D");
-
-            return $"{userId}{page}/{newGuid}";
         }
     }
 }
