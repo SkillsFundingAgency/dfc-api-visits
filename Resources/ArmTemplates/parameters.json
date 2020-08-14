@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "Neo4jUrl": {
-        "value": "__neo4jUrl__"
+        "value": "__Neo4jUrlVisits__"
       },
       "Neo4jUser": {
-        "value": "__neo4jUser__"
+        "value": "__Neo4jUserVisits__"
       },
       "Neo4jPassword": {
-        "value": "__neo4jPassword__"
+        "value": "__Neo4jPasswordVisits__"
       },
       "appSharedStorageAccountName": {
         "value": "__appSharedStorageAccountName__"
