@@ -1,7 +1,9 @@
 ﻿using DFC.Api.Visits.Models;
 using DFC.ServiceTaxonomy.Neo4j.Commands.Interfaces;
 using DFC.ServiceTaxonomy.Neo4j.Services;
+using Microsoft.Azure.WebJobs.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -15,8 +17,9 @@ namespace DFC.Api.Visits.Neo4J
         private readonly IGraphDatabase graphDatabase;
         private readonly IServiceProvider serviceProvider;
         private readonly int retentionDays;
+        private readonly ILogger log;
 
-        public Neo4JService(IGraphDatabase graphDatabase, IServiceProvider serviceProvider, IOptions<VisitSettings> settings)
+        public Neo4JService(IGraphDatabase graphDatabase, IServiceProvider serviceProvider, IOptions<VisitSettings> settings, ILoggerFactory factory)
         {
             if (settings == null)
             {
@@ -26,6 +29,7 @@ namespace DFC.Api.Visits.Neo4J
             this.graphDatabase = graphDatabase;
             this.serviceProvider = serviceProvider;
             this.retentionDays = settings.Value.RetentionInDays;
+            this.log = factory.CreateLogger(LogCategories.CreateFunctionCategory(nameof(Neo4JService)));
         }
 
         public Task InsertNewRequest(CreateVisitRequest model)
@@ -74,7 +78,17 @@ namespace DFC.Api.Visits.Neo4J
                 "\r\nwith u,v,parent \r\n" +
                 $"CALL apoc.ttl.expireIn(parent,toInteger({this.retentionDays}),'d') return u";
 
-            await this.graphDatabase.Run(customCommand).ConfigureAwait(false);
+            log.LogInformation("Adding visit to neo4j");
+
+            try
+            {
+                await this.graphDatabase.Run(customCommand).ConfigureAwait(false);
+                log.LogInformation("visit successfully added to neo4j");
+            }
+            catch (Exception e)
+            {
+                log.LogError($"Unable to add visit to neo4j, failed with error : {e}");
+            }
         }
     }
 }
