@@ -32,9 +32,8 @@ pr:
 stages:
 - stage: Build
   jobs:
-
   - job:
-    displayName: Build and test application & templates"
+    displayName: "Build and test application & templates"
     steps:
     - template: /AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
       parameters:
@@ -80,7 +79,6 @@ stages:
   - group: dfc-app-shared-dev
   - group: 'KeyVault - dfc-dev-shared-kv'
   - template: VariableTemplates/DevEnvironmentVariables.yml
-  
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -123,7 +121,6 @@ stages:
   - group: dfc-app-shared-sit
   - group: 'KeyVault - dfc-sit-shared-kv'
   - template: VariableTemplates/SitEnvironmentVariables.yml
-  
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
