@@ -42,7 +42,7 @@ stages:
 
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
-        SolutionBaseName: $(SolutionBaseName)
+        SolutionBaseName: 'DFC.Api.Visits'
         BuildPlatform: 'any cpu'
         BuildConfiguration: 'release'
         DotNetCoreVersion: '3.1.100'
@@ -52,7 +52,7 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Publish OpenAPI docs to Pipeline Artifact
       inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/${{ variables.SolutionBaseName }}/OpenAPIDocs"
+        targetPath: "$(System.DefaultWorkingDirectory)/'DFC.Api.Visits'/OpenAPIDocs"
         artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
 
     - task: PublishPipelineArtifact@1
