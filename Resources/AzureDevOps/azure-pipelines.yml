@@ -33,7 +33,7 @@ stages:
 - stage: Build
   jobs:
   - job:
-    displayName: "Build and test application & templates"
+    displayName: Build and test application & templates"
     steps:
     - template: /AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
       parameters:
@@ -42,9 +42,9 @@ stages:
 
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
-        SolutionBaseName: $(SolutionBaseName)
-        BuildPlatform: $(BuildPlatform)
-        BuildConfiguration: $(BuildConfiguration)
+        SolutionBaseName: 'DFC.Api.Visits'
+        BuildPlatform: 'any cpu'
+        BuildConfiguration: 'release'
         DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
@@ -52,7 +52,7 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Publish OpenAPI docs to Pipeline Artifact
       inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/${{ variables.SolutionBaseName }}/OpenAPIDocs"
+        targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
         artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
 
     - task: PublishPipelineArtifact@1
@@ -71,6 +71,7 @@ stages:
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to DEV_VISITS
   variables:
+  - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-all
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
@@ -78,7 +79,6 @@ stages:
   - group: dfc-stax-shared-dev
   - group: dfc-app-shared-dev
   - group: 'KeyVault - dfc-dev-shared-kv'
-  - template: VariableTemplates/DevEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
