@@ -21,8 +21,6 @@ variables:
   value: dfc-sit-api-visits-fa
 - name: ResourceGroup
   value: dfc-sit-api-visits-rg
-- name: WebAppPrefix
-  value: dfc-sit
 - name: aspTier
   value: Standard
 - name: aspInstances
