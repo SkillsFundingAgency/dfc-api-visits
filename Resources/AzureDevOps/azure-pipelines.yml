@@ -37,7 +37,7 @@ stages:
     steps:
     - template: /AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
       parameters:
-        ArmTemplateRoot: "$(System.DefaultWorkingDirectory)/Resources/ArmTemplates"
+        ArmTemplateRoot: '${{ variables.ArmTemplateRoot }}'
         SolutionBaseName: '${{ variables.SolutionBaseName }}'
 
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
