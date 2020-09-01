@@ -42,9 +42,9 @@ stages:
 
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
-        SolutionBaseName: '${{ variables.SolutionBaseName }}'
-        BuildPlatform: '${{ variables.BuildPlatform }}'
-        BuildConfiguration: '${{ variables.BuildConfiguration }}'
+        SolutionBaseName: 'DFC.Api.Visits'
+        BuildPlatform: 'any cpu'
+        BuildConfiguration: 'release'
         DotNetCoreVersion: '3.1.100'
         PublishWebApp: true
         TestSuffix: UnitTests
