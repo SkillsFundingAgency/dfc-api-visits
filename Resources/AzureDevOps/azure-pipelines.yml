@@ -52,7 +52,7 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Publish OpenAPI docs to Pipeline Artifact
       inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
+        targetPath: "$(System.DefaultWorkingDirectory)/${{ variables.SolutionBaseName }}/OpenAPIDocs"
         artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
 
     - task: PublishPipelineArtifact@1
