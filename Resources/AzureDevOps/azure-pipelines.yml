@@ -52,8 +52,8 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Publish OpenAPI docs to Pipeline Artifact
       inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/'DFC.Api.Visits'/OpenAPIDocs"
-        artifactName: DFC.Api.Visits.Resources.OpenAPIDocs
+        targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
+        artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
 
     - task: PublishPipelineArtifact@1
       displayName: Publish API import script to Pipeline Artifact
