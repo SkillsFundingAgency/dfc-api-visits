@@ -21,8 +21,6 @@ variables:
   value: dfc-dev-api-visits-fa
 - name: ResourceGroup
   value: dfc-dev-api-visits-rg
-- name: ServiceOffering
-  value: Digital First Career Service (DFCS) Website
 - name: WebAppPrefix
   value: dfc-dev
 - name: aspTier
