@@ -6,9 +6,9 @@ variables:
 - name: ApimLoggerName
   value: visits-logger
 - name: ApimProductId
-  value: visits
+  value: $(ApiName)
 - name: ApimProductInstanceName
-  value: visits
+  value: $(ApiName)
 - name: ApiName
   value: visits
 - name: ApiVersionNumber
