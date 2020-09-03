@@ -99,7 +99,7 @@ stages:
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: '$(ReleaseEnvironmentName)'
+      EnvironmentName: DEV_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -141,7 +141,7 @@ stages:
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: '$(ReleaseEnvironmentName)'
+      EnvironmentName: SIT_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
