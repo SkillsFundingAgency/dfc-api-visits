@@ -15,12 +15,14 @@ variables:
   value: v1
 - name: DfcVisitsTestsBuildId
   value: 1
+- name: WebAppPrefix
+  value: dfc-sit-api
 - name: FunctionAppInsightName
-  value: dfc-sit-api-visits-ai
+  value: $(WebAppPrefix)-visits-ai
 - name: FunctionAppName
-  value: dfc-sit-api-visits-fa
+  value: $(WebAppPrefix)-visits-fa
 - name: ResourceGroup
-  value: dfc-sit-api-visits-rg
+  value: $(WebAppPrefix)-visits-rg
 - name: aspTier
   value: Standard
 - name: aspInstances

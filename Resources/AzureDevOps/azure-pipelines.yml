@@ -107,7 +107,7 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: '$(FunctionAppName)'
+            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
 
 - stage: DeployToSitVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -149,4 +149,4 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: '$(FunctionAppName)'
+            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
