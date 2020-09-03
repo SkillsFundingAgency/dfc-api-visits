@@ -1,3 +1,9 @@
+variables:
+  ArmTemplateRoot: "$(System.DefaultWorkingDirectory)/Resources/ArmTemplates"
+  SolutionBaseName: 'DFC.App.Pages'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
+
 resources:
   repositories:
   - repository: self
@@ -31,8 +37,8 @@ stages:
     steps:
     - template: /AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
       parameters:
-        ArmTemplateRoot: "$(System.DefaultWorkingDirectory)/Resources/ArmTemplates"
-        SolutionBaseName: 'DFC.Api.Visits'
+        ArmTemplateRoot: '${{ variables.ArmTemplateRoot }}'
+        SolutionBaseName: '${{ variables.SolutionBaseName }}'
 
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
@@ -47,19 +53,19 @@ stages:
       displayName: Publish OpenAPI docs to Pipeline Artifact
       inputs:
         targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
-        artifactName: DFC.Api.Visits.Resources.OpenAPIDocs
+        artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
 
     - task: PublishPipelineArtifact@1
       displayName: Publish API import script to Pipeline Artifact
       inputs:
         targetPath: "$(System.DefaultWorkingDirectory)/Resources/Scripts"
-        artifactName: DFC.Api.Visits.Resources.Scripts
+        artifactName: ${{ variables.SolutionBaseName }}.Resources.Scripts
 
     - task: PublishPipelineArtifact@1
       displayName: Publish apim policies
       inputs:
         targetPath: "$(System.DefaultWorkingDirectory)/Resources/ApimPolicy"
-        artifactName: DFC.Api.Visits.Resources.ApimPolicies
+        artifactName: ${{ variables.SolutionBaseName }}.Resources.ApimPolicies
 
 - stage: DeployToDevVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -67,15 +73,12 @@ stages:
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-all
-  - group: dfc-api-visits-dev
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-dev
   - group: dfc-app-shared-dev
   - group: 'KeyVault - dfc-dev-shared-kv'
-  - name: WebAppPrefix
-    value: dfc-dev
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -84,19 +87,19 @@ stages:
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
-      PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
-      ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
       ApimProductId: '$(ApimProductId)'
       ApimLoggerName: '$(ApimLoggerName)'
       APIProductInstanceName: '$(ApimProductInstanceName)'
-      ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
-      ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
       SharedResourceGroup: '$(SharedResourceGroup)'
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: DEV_VISITS
+      EnvironmentName: '$(ReleaseEnvironmentName)'
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -104,23 +107,20 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
 
 - stage: DeployToSitVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to SIT_VISITS
   variables:
-  - template: VariableTemplates/SitEnvironmentVariables.yml
   - group: dfc-shared-all
-  - group: dfc-api-visits-sit
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-sit
   - group: dfc-app-shared-sit
   - group: 'KeyVault - dfc-sit-shared-kv'
-  - name: WebAppPrefix
-    value: dfc-sit
+  - template: VariableTemplates/SitEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -129,19 +129,19 @@ stages:
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
-      PackageFile:  "$(Pipeline.Workspace)/DFC.Api.Visits.DeploymentPackages/DFC.Api.Visits.zip"
-      ApimPoliciesPath:  "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ApimPolicies"
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
       ApimProductId: '$(ApimProductId)'
       ApimLoggerName: '$(ApimLoggerName)'
       APIProductInstanceName: '$APIProductInstanceName)'
-      ArmTemplateFolder: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.ArmTemplates/"
-      ApimImportScript: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      SpecificationPath: "$(Pipeline.Workspace)/DFC.Api.Visits.Resources.OpenApiDocs"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
       SharedResourceGroup: '$(SharedResourceGroup)'
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: SIT_VISITS
+      EnvironmentName: '$(ReleaseEnvironmentName)'
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -149,4 +149,4 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'

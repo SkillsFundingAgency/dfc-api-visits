@@ -26,11 +26,20 @@
       "aspSize": {
         "value": "__aspSize__"
       },
+      "aspInstances": {
+        "value": __aspInstances__
+      },
       "sharedAppServicePlanName": {
         "value": "__sharedAppServicePlanName__"
       },
       "sharedAppServicePlanResourceGroup": {
         "value": "__appSharedResourceGroup__"
+      },
+      "environment": {
+        "value": "__ReleaseEnvironmentName__",
+        "metadata": {
+            "comment": "Bug in tokenisation task prevents referencing Release.EnvironmentName directly.  https://github.com/TotalALM/VSTS-Tasks/issues/29"
+        }
       },
       "FunctionAppName": {
         "value": "__FunctionAppName__"

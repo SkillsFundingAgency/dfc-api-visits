@@ -9,14 +9,16 @@
         "type": "string"
       },
       "aspInstances": {
-        "type": "int",
-        "defaultValue": 2
+        "type": "int"
       },
       "aspSize": {
         "type": "string"
       },
       "aspTier": {
         "type": "string"
+      },
+      "environment": {
+            "type": "string"
       },
       "FunctionAppInsightName": {
         "type": "string"
@@ -59,10 +61,10 @@
       }
     },
     "variables": {
-      "appServicePlanName": "[if(greater(length(parameters('sharedAppServicePlanName')), 0), parameters('sharedAppServicePlanName'), concat(variables('resourcePrefix'), '-asp'))]",
-      "appServicePlanResourceGroup": "[if(greater(length(parameters('SharedAppServicePlanResourceGroup')), 0), parameters('SharedAppServicePlanResourceGroup'), resourceGroup().name)]",
+      "appServicePlanName": "[concat(variables('resourcePrefix'), '-asp')]",
+      "appServicePlanResourceGroup": "[concat(variables('resourcePrefix'),'-rg')]",
       "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
-      "resourcePrefix": "[tolower(concat('dfc-dev-api-visits'))]",
+      "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-api-visits'))]",
       "VersionSetName": "[concat(toLower(parameters('ApiName')), '-versionset')]"
     },
     "resources": [
@@ -145,7 +147,6 @@
         "apiVersion": "2017-05-10",
         "name": "[variables('appServicePlanName')]",
         "type": "Microsoft.Resources/deployments",
-        "condition": "[not(equals(parameters('sharedAppServicePlanName'), variables('appServicePlanName')))]",
         "properties": {
           "mode": "Incremental",
           "templateLink": {

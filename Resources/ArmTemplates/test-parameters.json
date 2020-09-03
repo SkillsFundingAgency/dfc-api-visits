@@ -15,7 +15,13 @@
         "value": "Standard"
       },
       "aspSize": {
-        "value": "1"
+        "value": "2"
+      },
+      "aspInstances": {
+        "value": 2
+      },
+      "Environment": {
+        "value": "FOO"
       },
       "FunctionAppName": {
         "value": "dfc-dev-funcapp-v1-fa"
