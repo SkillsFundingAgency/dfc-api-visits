@@ -73,7 +73,6 @@ stages:
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-all
-  - group: dfc-api-visits-dev
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
@@ -114,15 +113,14 @@ stages:
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to SIT_VISITS
   variables:
+  - template: VariableTemplates/SitEnvironmentVariables.yml
   - group: dfc-shared-all
-  - group: dfc-api-visits-sit
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-sit
   - group: dfc-app-shared-sit
   - group: 'KeyVault - dfc-sit-shared-kv'
-  - template: VariableTemplates/SitEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
