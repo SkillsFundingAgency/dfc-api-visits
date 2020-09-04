@@ -1,7 +1,7 @@
 variables:
 - name: FunctionalTestsSqlDatabaseConnStr
   value: 'Server=tcp:$(sharedSqlServerName).database.windows.net,1433;Initial Catalog=$(SqlDatabaseName);Persist Security Info=False;User ID=$(FunctionalTestsUser);Password=$(FunctionalTestsUserPassword);MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-- name: EnvironmentName
+- name: ReleaseEnvironmentName
   value: DEV
 - name: ApimLoggerName
   value: visits-logger
@@ -16,15 +16,15 @@ variables:
 - name: DfcVisitsTestsBuildId
   value: 1
 - name: WebAppPrefix
-  value: dfc-dev-api
+  value: dfc-dev
 - name: FunctionAppInsightName
-  value: $(WebAppPrefix)-visits-ai
+  value: $(WebAppPrefix)-api-visits-ai
 - name: FunctionAppName
-  value: $(WebAppPrefix)-visits-fa
+  value: $(WebAppPrefix)-api-visits-fa
 - name: ResourceGroup
-  value: $(WebAppPrefix)-visits-rg
+  value: $(WebAppPrefix)-api-visits-rg
 - name: appServicePlanName
-  value: $(WebAppPrefix)-visits-asp
+  value: $(WebAppPrefix)-api-visits-asp
 - name: aspTier
   value: Standard
 - name: aspInstances
