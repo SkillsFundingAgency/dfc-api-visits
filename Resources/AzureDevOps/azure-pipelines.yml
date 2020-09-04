@@ -69,7 +69,7 @@ stages:
 
 - stage: DeployToDevVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  displayName: Deploy to DEV_Visits
+  displayName: Deploy to DEV_VISITS
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-all
@@ -99,7 +99,7 @@ stages:
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: DEV_Visits
+      EnvironmentName: DEV_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -107,11 +107,11 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-  displayName: Deploy to SIT_Visits
+  displayName: Deploy to SIT_VISITS
   variables:
   - group: dfc-shared-all
   - group: dfc-app-integrationtests-all
@@ -149,4 +149,4 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
