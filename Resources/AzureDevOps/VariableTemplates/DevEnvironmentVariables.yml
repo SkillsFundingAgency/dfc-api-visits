@@ -22,9 +22,9 @@ variables:
 - name: FunctionAppName
   value: $(WebAppPrefix)-api-visits-fa
 - name: ResourceGroup
-  value: dfc-dev-api-visits-rg
+  value: $(WebAppPrefix)-api-visits-rg
 - name: appServicePlanName
-  value: dfc-dev-api-visits-asp
+  value: $(WebAppPrefix)-api-visits-asp
 - name: aspTier
   value: Standard
 - name: aspInstances
