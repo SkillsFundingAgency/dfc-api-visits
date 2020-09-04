@@ -5,12 +5,17 @@ parameters:
   ParentBusiness: ''
   ServiceOffering: ''
   ResourceGroup: ''
+  DfCDevopsPath: ''
   Location: 'West Europe'
   ArmTemplateFolder: ''
   ArmOutputVariableName: 'ARMOutputs'
   PolicyFilePath: ''
   ApimProductId: ''
 
+steps:
+- checkout: dfc-devops
+  path: 's/dfc-devops/'
+  
 steps:
 - powershell: |
     Invoke-WebRequest -Uri "${{ parameters.SetEsfaResourceGroupTagsScript }}" -OutFile "${{ variables['System.DefaultWorkingDirectory']}}/Set-EsfaResourceGroupTags.ps1"
