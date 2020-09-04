@@ -36,7 +36,7 @@
         "value": "__appSharedResourceGroup__"
       },
       "environment": {
-        "value": "__AzureEnvironmentName__",
+        "value": "__ReleaseEnvironmentName__",
         "metadata": {
             "comment": "Bug in tokenisation task prevents referencing Release.EnvironmentName directly.  https://github.com/TotalALM/VSTS-Tasks/issues/29"
         }
