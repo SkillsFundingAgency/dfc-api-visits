@@ -1,6 +1,6 @@
 variables:
   ArmTemplateRoot: "$(System.DefaultWorkingDirectory)/Resources/ArmTemplates"
-  SolutionBaseName: 'DFC.App.Visits'
+  SolutionBaseName: 'DFC.Api.Visits'
   BuildPlatform: 'any cpu'
   BuildConfiguration: 'release'
 
