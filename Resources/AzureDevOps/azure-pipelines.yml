@@ -73,6 +73,7 @@ stages:
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-shared-all
+  - group: dfc-api-visits-dev
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
@@ -114,6 +115,7 @@ stages:
   displayName: Deploy to SIT_VISITS
   variables:
   - group: dfc-shared-all
+  - group: dfc-api-visits-sit
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
