@@ -23,6 +23,8 @@ variables:
   value: $(WebAppPrefix)-visits-fa
 - name: ResourceGroup
   value: $(WebAppPrefix)-visits-rg
+- name: appServicePlanName
+  value: $(WebAppPrefix)-visits-asp
 - name: aspTier
   value: Standard
 - name: aspInstances
