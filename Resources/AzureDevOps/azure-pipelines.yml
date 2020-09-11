@@ -1,6 +1,6 @@
 variables:
   ArmTemplateRoot: "$(System.DefaultWorkingDirectory)/Resources/ArmTemplates"
-  SolutionBaseName: 'DFC.App.Pages'
+  SolutionBaseName: 'DFC.Api.Visits'
   BuildPlatform: 'any cpu'
   BuildConfiguration: 'release'
 
@@ -72,7 +72,6 @@ stages:
   displayName: Deploy to DEV_VISITS
   variables:
   - template: VariableTemplates/DevEnvironmentVariables.yml
-  - group: dfc-shared-all
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
@@ -99,7 +98,7 @@ stages:
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: '$(ReleaseEnvironmentName)'
+      EnvironmentName: DEV_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -107,20 +106,19 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to SIT_VISITS
   variables:
-  - group: dfc-shared-all
+  - template: VariableTemplates/SitEnvironmentVariables.yml
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-sit
   - group: dfc-app-shared-sit
   - group: 'KeyVault - dfc-sit-shared-kv'
-  - template: VariableTemplates/SitEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -141,7 +139,7 @@ stages:
       ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
-      EnvironmentName: '$(ReleaseEnvironmentName)'
+      EnvironmentName: SIT_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
@@ -149,4 +147,4 @@ stages:
       Apis: 
         -
           - name: AddVisit
-            azureFunctionName: ${{ variables.WebAppPrefix }}-visits-fa'
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
