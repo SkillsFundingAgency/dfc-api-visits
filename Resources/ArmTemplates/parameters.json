@@ -20,6 +20,12 @@
       "aspTier": {
         "value": "__aspTier__"
       },
+      "aseHostingEnvironmentName": {
+        "value": "__AseServiceName__"
+      },
+      "aseResourceGroup": {
+        "value": "__aseResourceGroup__"
+      },
       "FunctionAppInsightName": {
         "value": "__FunctionAppInsightName__"
       },
