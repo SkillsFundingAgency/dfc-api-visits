@@ -17,6 +17,16 @@ steps:
 - checkout: dfc-devops
   path: 's/dfc-devops/'
 
+- task: AzureAppServiceManage@0
+  displayName: 'Start Azure App Service:${{ parameters.WebAppName }}'
+  inputs:
+    azureSubscription: '${{ parameters.AzureSubscription }}'
+    Action: 'Start Azure App Service'
+    WebAppName: '${{ parameters.WebAppName }}'
+    SpecifySlotOrASE: true
+    ResourceGroupName: '${{ parameters.ResourceGroup }}'
+    Slot: staging
+
 - task: AzureRmWebAppDeployment@4
   displayName: 'Azure App Service Deploy: ${{ parameters.WebAppName }}'
   inputs:
@@ -35,6 +45,16 @@ steps:
     WebAppName: '${{ parameters.WebAppName }}'
     ResourceGroupName: '${{ parameters.ResourceGroup }}'
     SourceSlot: staging
+
+- task: AzureAppServiceManage@0
+  displayName: 'Stop Azure App Service Slots: ${{ parameters.WebAppName }}'
+  inputs:
+    azureSubscription: '${{ parameters.AzureSubscription }}'
+    Action: 'Stop Azure App Service'
+    WebAppName: '${{ parameters.WebAppName }}'
+    SpecifySlotOrASE: true
+    ResourceGroupName: '${{ parameters.ResourceGroup }}'
+    Slot: staging
 
 - powershell: |
     Write-Host "##vso[task.setvariable variable=FunctionAppUrl]https://${{ parameters.WebAppName }}.${{ parameters.FunctionAppDomain }}"

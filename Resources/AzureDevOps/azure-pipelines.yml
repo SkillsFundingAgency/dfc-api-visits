@@ -23,11 +23,13 @@ trigger:
   branches:
     include: 
     - dev
+    - master
 
 pr:
   branches:
     include: 
     - dev
+    - master
 
 stages:
 - stage: Build
@@ -140,6 +142,47 @@ stages:
       FunctionAppDomain: '$(FunctionAppDomain)'
       FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: SIT_VISITS
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
+      # The top level -`s here defines an array of "something"
+      # The inner level -'s defines an array of mappings.
+      Apis: 
+        -
+          - name: AddVisit
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+
+- stage: DeployToPPVisits
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to PP_VISITS
+  variables:
+  - template: VariableTemplates/PPEnvironmentVariables.yml
+  - group: dfc-app-integrationtests-all
+  - group: dfc-shared-pp
+  - group: dfc-app-shared-all
+  - group: dfc-stax-shared-pp
+  - group: dfc-app-shared-pp
+  - group: 'KeyVault - dfc-pp-shared-kv'
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
+      ApimProductId: '$(ApimProductId)'
+      ApimLoggerName: '$(ApimLoggerName)'
+      APIProductInstanceName: '$APIProductInstanceName)'
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
+      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
+      SharedResourceGroup: '$(SharedResourceGroup)'
+      ApimServiceName: '$(ApimServiceName)'
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      FunctionAppName: '$(FunctionAppName)'
+      EnvironmentName: PP_VISITS
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
