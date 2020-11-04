@@ -2,24 +2,15 @@ parameters:
   AzureSubscription: ''
   SetEsfaResourceGroupTagsScript: 'https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/PSScripts/Set-EsfaResourceGroupTags.ps1'
   PackageFile:  ''
-  ApimPoliciesPath: ''
   ArmTemplateFolder: ''
-  ApimProductId: ''
-  ApimLoggerName: ''
-  ApimImportScript: ''
-  SpecificationPath: ''
   Location: 'West Europe'
   ArmOutputVariableName: 'ARMOutputs'
   EnvironmentTag: 'DEV/Test'
   ParentBusiness: ''
   ServiceOffering: ''
   ResourceGroup: ''
-  SharedResourceGroup: ''
-  ApimServiceName: ''
   FunctionAppDomain: ''
   EnvironmentName: ''
-  DFCAzureDevOpsProjectGuid: ''
-  DfcContentTestsBuildId: ''
   # The 'Apis' parameter is a bit special here - it requires a structured, complex parameter:  an array of arrays of objects
   # Below is a simple example of what it expects:
   # - 
@@ -49,8 +40,6 @@ jobs:
             Location: '${{ parameters.Location }}'
             ArmOutputVariableName: '${{ parameters.ArmOutputVariableName }}'
             ArmTemplateFolder: '${{ parameters.ArmTemplateFolder }}'
-            PolicyFilePath: '${{ parameters.ApimPoliciesPath }}'
-            ApimProductId: '${{ parameters.ApimProductId }}'
 
 # Please see https://github.com/microsoft/azure-pipelines-yaml/blob/master/design/each-expression.md for more information on the each expression.
 - ${{ each apiPartition in parameters.Apis }}:
@@ -70,15 +59,8 @@ jobs:
             steps:
             - template: ../StepTemplates/deploy-azure-function.yml
               parameters:
-                FunctionType: '${{ api.name }}'
                 WebAppName: '${{ api.azureFunctionName }}'
                 AzureSubscription: '${{ parameters.AzureSubscription }}'
-                SharedResourceGroup: '${{ parameters.SharedResourceGroup }}'
-                ApimServiceName: '${{ parameters.ApimServiceName }}'
-                ApimImportScript: '${{ parameters.ApimImportScript }}'
-                SpecificationPath:  '${{ parameters.SpecificationPath }}'
                 FunctionAppDomain: '${{ parameters.FunctionAppDomain }}'
                 PackageFile: '${{ parameters.PackageFile }}'
                 ResourceGroup: '${{ parameters.ResourceGroup }}'
-                ApimProductId: '${{ parameters.ApimProductId }}'
-                ApimLoggerName: '${{ parameters.ApimLoggerName }}'

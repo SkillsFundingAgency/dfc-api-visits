@@ -51,24 +51,6 @@ stages:
         PublishWebApp: true
         TestSuffix: UnitTests
 
-    - task: PublishPipelineArtifact@1
-      displayName: Publish OpenAPI docs to Pipeline Artifact
-      inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/DFC.Api.Visits/OpenAPIDocs"
-        artifactName: ${{ variables.SolutionBaseName }}.Resources.OpenAPIDocs
-
-    - task: PublishPipelineArtifact@1
-      displayName: Publish API import script to Pipeline Artifact
-      inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/Resources/Scripts"
-        artifactName: ${{ variables.SolutionBaseName }}.Resources.Scripts
-
-    - task: PublishPipelineArtifact@1
-      displayName: Publish apim policies
-      inputs:
-        targetPath: "$(System.DefaultWorkingDirectory)/Resources/ApimPolicy"
-        artifactName: ${{ variables.SolutionBaseName }}.Resources.ApimPolicies
-
 - stage: DeployToDevVisits
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   displayName: Deploy to DEV_VISITS
@@ -89,19 +71,9 @@ stages:
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
-      ApimProductId: '$(ApimProductId)'
-      ApimLoggerName: '$(ApimLoggerName)'
-      APIProductInstanceName: '$(ApimProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
-      SharedResourceGroup: '$(SharedResourceGroup)'
-      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: DEV_VISITS
-      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
       # The inner level -'s defines an array of mappings.
@@ -130,19 +102,9 @@ stages:
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
-      ApimProductId: '$(ApimProductId)'
-      ApimLoggerName: '$(ApimLoggerName)'
-      APIProductInstanceName: '$APIProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
-      SharedResourceGroup: '$(SharedResourceGroup)'
-      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: SIT_VISITS
-      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
       # The inner level -'s defines an array of mappings.
@@ -171,19 +133,9 @@ stages:
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
-      ApimPoliciesPath:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ApimPolicies"
-      ApimProductId: '$(ApimProductId)'
-      ApimLoggerName: '$(ApimLoggerName)'
-      APIProductInstanceName: '$APIProductInstanceName)'
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-      ApimImportScript: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.Scripts/Import-ApimOpenApiDefinitionFromFile.ps1"
-      SpecificationPath: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.OpenApiDocs"
-      SharedResourceGroup: '$(SharedResourceGroup)'
-      ApimServiceName: '$(ApimServiceName)'
       FunctionAppDomain: '$(FunctionAppDomain)'
-      FunctionAppName: '$(FunctionAppName)'
       EnvironmentName: PP_VISITS
-      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
       # The top level -`s here defines an array of "something"
       # The inner level -'s defines an array of mappings.
