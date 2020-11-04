@@ -35,12 +35,6 @@
       "aspInstances": {
         "value": __aspInstances__
       },
-      "sharedAppServicePlanName": {
-        "value": "__sharedAppServicePlanName__"
-      },
-      "sharedAppServicePlanResourceGroup": {
-        "value": "__appSharedResourceGroup__"
-      },
       "environment": {
         "value": "__ReleaseEnvironmentName__",
         "metadata": {
@@ -49,24 +43,6 @@
       },
       "FunctionAppName": {
         "value": "__FunctionAppName__"
-      },
-      "ApimProductInstanceName": {
-        "value": "__ApimProductInstanceName__"
-      },
-      "ApimResourceGroup": {
-        "value": "__SharedResourceGroupName__"
-      },
-      "ApiName": {
-        "value": "__ApiName__"
-      },
-      "ApiVersionNumber": {
-        "value": "__ApiVersion__"
-      },
-      "ApimLoggerName": {
-        "value": "__ApimLoggerName__"
-      },
-      "ApimServiceName": {
-        "value": "__ApimServiceName__"
       }
     }
   }

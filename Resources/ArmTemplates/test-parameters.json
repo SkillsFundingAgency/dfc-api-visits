@@ -5,12 +5,6 @@
       "appSharedResourceGroup": {
         "value": "dfc-dev-app-sharedresources-rg"
       },
-      "sharedAppServicePlanName": {
-        "value": "dfc-dev-app-shared-asp"
-      },
-      "sharedAppServicePlanResourceGroup": {
-        "value": "dfc-dev-app-sharedresources-rg"
-      },
       "aspTier": {
         "value": "Standard"
       },
@@ -29,9 +23,6 @@
       "FunctionAppInsightName": {
         "value": "dfc-dev-funcapp-v1-ai"
       },
-      "ApimProductInstanceName": {
-        "value": "test-api-product"
-      },
       "Neo4jUrl": {
         "value": "http://some-database-instance/"
       },
@@ -43,21 +34,6 @@
       },
       "appSharedStorageAccountName": {
         "value": "dfcdevappsharedstr"
-      },
-      "ApimResourceGroup": {
-        "value": "dfc-test-template-rg"
-      },
-      "ApimServiceName": {
-        "value": "an-apim-instance"
-      },
-      "ApiName": {
-        "value": "api-name"
-      },
-      "ApiVersionNumber": {
-        "value": "v1"
-      },
-      "ApimLoggerName": {
-        "value": "some-apim-logger"
       }
     }
   }
