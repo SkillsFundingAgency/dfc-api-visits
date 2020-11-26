@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -23,25 +24,35 @@ namespace DFC.Api.Visits.Function
         [FunctionName("CreateVisit")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "CreateVisit")]
-            HttpRequest req)
+            HttpRequest req, ILogger logger)
         {
-            if (req == null)
+            try
             {
-                throw new ArgumentNullException(nameof(req));
+                if (req == null)
+                {
+                    throw new ArgumentNullException(nameof(req));
+                }
+
+                string content;
+
+                using (var str = new StreamReader(req.Body))
+                {
+                    content = await str.ReadToEndAsync().ConfigureAwait(false);
+                }
+
+                var model = JsonConvert.DeserializeObject<CreateVisitRequest>(content);
+
+                await this.neo4JService.InsertNewRequest(model).ConfigureAwait(false);
+
+                return new OkResult();
             }
-
-            string content;
-
-            using (var str = new StreamReader(req.Body))
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
-                content = await str.ReadToEndAsync().ConfigureAwait(false);
+                logger.LogError(ex.ToString());
+                return new StatusCodeResult(500);
             }
-
-            var model = JsonConvert.DeserializeObject<CreateVisitRequest>(content);
-
-            await this.neo4JService.InsertNewRequest(model).ConfigureAwait(false);
-
-            return new OkResult();
         }
     }
 }
