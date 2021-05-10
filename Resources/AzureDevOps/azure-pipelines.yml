@@ -52,16 +52,16 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToDevVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_VISITS
   variables:
-  - template: VariableTemplates/DevEnvironmentVariables.yml
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-dev
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-dev
   - group: dfc-app-shared-dev
   - group: 'KeyVault - dfc-dev-shared-kv'
+  - template: VariableTemplates/DevEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -83,16 +83,16 @@ stages:
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: succeeded()
   displayName: Deploy to SIT_VISITS
   variables:
-  - template: VariableTemplates/SitEnvironmentVariables.yml
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-sit
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-sit
   - group: dfc-app-shared-sit
   - group: 'KeyVault - dfc-sit-shared-kv'
+  - template: VariableTemplates/SitEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
@@ -114,16 +114,16 @@ stages:
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToPPVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: Deploy to PP_VISITS
   variables:
-  - template: VariableTemplates/PPEnvironmentVariables.yml
   - group: dfc-app-integrationtests-all
   - group: dfc-shared-pp
   - group: dfc-app-shared-all
   - group: dfc-stax-shared-pp
   - group: dfc-app-shared-pp
   - group: 'KeyVault - dfc-pp-shared-kv'
+  - template: VariableTemplates/PPEnvironmentVariables.yml
   jobs:
   - template: JobTemplates/deploy-environment.yml
     parameters:
