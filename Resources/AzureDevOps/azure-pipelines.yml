@@ -52,7 +52,7 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToDevVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_VISITS
   variables:
   - group: dfc-app-integrationtests-all
@@ -83,7 +83,7 @@ stages:
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToSitVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: succeeded()
   displayName: Deploy to SIT_VISITS
   variables:
   - group: dfc-app-integrationtests-all
@@ -114,7 +114,7 @@ stages:
             azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
 
 - stage: DeployToPPVisits
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: and(eq(dependencies.Build.result,'Succeeded'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: Deploy to PP_VISITS
   variables:
   - group: dfc-app-integrationtests-all
