@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DFC.Api.Visits.Function
+namespace DFC.Api.Visits.Functions
 {
     public class CreateVisit
     {

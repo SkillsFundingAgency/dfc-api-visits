@@ -1,4 +1,4 @@
-using DFC.Api.Visits.Function;
+using DFC.Api.Visits.Functions;
 using DFC.Api.Visits.Models;
 using DFC.Api.Visits.Neo4J;
 using FakeItEasy;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DFC.Api.Visits.UnitTests
+namespace DFC.Api.Visits.UnitTests.Functions
 {
     public class CreateVisitHttpTriggerTests
     {
@@ -37,9 +37,10 @@ namespace DFC.Api.Visits.UnitTests
 
             var bytearray = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(model));
 
-            A.CallTo(() => request.Body).Returns(new MemoryStream(bytearray));
+            using var ms = new MemoryStream(bytearray);
+            A.CallTo(() => request.Body).Returns(ms);
 
-            await function.Run(request, A.Fake<ILogger>());
+            await function.Run(request, A.Fake<ILogger>()).ConfigureAwait(false);
 
             A.CallTo(() => neoService.InsertNewRequest(A<CreateVisitRequest>.Ignored)).MustHaveHappened();
         }

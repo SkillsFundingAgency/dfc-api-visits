@@ -57,17 +57,17 @@ namespace DFC.Api.Visits.UnitTests.ServiceTests
         }
 
         [Fact]
-        public async Task WhenCreateVisitRequestNullThrowException()
+        public Task WhenCreateVisitRequestNullThrowException()
         {
             var service = new Neo4JService(graphDatabase, provider, settings, logFactory);
 
-            await Assert
+            return Assert
                 .ThrowsAsync<ArgumentNullException>(async () =>
-                    await service.InsertNewRequest(null).ConfigureAwait(false)).ConfigureAwait(false);
+                    await service.InsertNewRequest(null).ConfigureAwait(false));
         }
 
         [Fact]
-        public async Task WhenSettingsNullThrowException()
+        public void WhenSettingsNullThrowException()
         {
             Assert.Throws<ArgumentNullException>(() => new Neo4JService(graphDatabase, provider, null, logFactory));
         }
