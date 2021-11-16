@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DFC.Api.Visits.UnitTests
+namespace DFC.Api.Visits.UnitTests.Functions
 {
     public class CreateVisitHttpTriggerTests
     {
