@@ -1,4 +1,4 @@
-﻿using DFC.Api.Visits.Function;
+﻿using DFC.Api.Visits.Functions;
 using FakeItEasy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;

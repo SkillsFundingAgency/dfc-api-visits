@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 
-namespace DFC.Api.Visits.Function
+namespace DFC.Api.Visits.Functions
 {
     public static class HealthPingHttpTrigger
     {
