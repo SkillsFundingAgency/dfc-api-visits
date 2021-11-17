@@ -30,6 +30,16 @@ steps:
     ResourceGroupName: '${{ parameters.ResourceGroup }}'
     SlotName: staging
 
+- task: AzurePowerShell@4
+  displayName: 'Perform smoke test'
+  inputs:
+    azureSubscription: '${{ parameters.AzureSubscription }}'
+    ScriptPath: '$(Agent.BuildDirectory)/s/dfc-devops//PSCoreScripts/Invoke-SmokeTestOnWebApp.ps1'
+    ScriptArguments: |
+     -ResourceGroup ${{ parameters.ResourceGroup }} -AppName ${{ parameters.WebAppName }} -Path '/health/ping' -Slot staging -TimeoutInSecs 20 -Verbose
+    FailOnStandardError: true
+    azurePowerShellVersion: LatestVersion
+
 - task: AzureAppServiceManage@0
   displayName: 'Swap Slots: ${{ parameters.WebAppName }}'
   inputs:
