@@ -45,11 +45,3 @@ paths:
         '500':
           description: Missing App Settings or Config Files.
           content: {}
-  /health/ping:
-    get:
-      tags:
-      - Health ping
-      description: Simple OK response to a health ping
-      responses:
-        '200':
-          description: OK
