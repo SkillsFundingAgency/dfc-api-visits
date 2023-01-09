@@ -51,6 +51,38 @@ stages:
         PublishWebApp: true
         TestSuffix: UnitTests
 
+- stage: DeployToLabVisits
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  displayName: Deploy to LAB_VISITS
+  variables:
+  - group: dfc-app-integrationtests-all
+  - group: dfc-shared-lab
+  - group: dfc-app-shared-all
+  - group: dfc-stax-shared-lab
+  - group: dfc-app-shared-lab
+  - group: 'KeyVault - dfc-lab-shared-kv'
+  - template: VariableTemplates/LabEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      FunctionAppDomain: '$(FunctionAppDomain)'
+      EnvironmentName: LAB_VISITS
+      # The Apis parameter requires a complex object be passed in,  which requires some odd looking yaml.
+      # The top level -`s here defines an array of "something"
+      # The inner level -'s defines an array of mappings.
+      Apis: 
+        -
+          - name: AddVisit
+            azureFunctionName: '${{ variables.WebAppPrefix }}-api-visits-fa'
+
+            
 - stage: DeployToDevVisits
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
   displayName: Deploy to DEV_VISITS
