@@ -52,7 +52,7 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToLabVisits
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/dev'),eq(variables['Build.SourceBranch'], 'refs/heads/lab_pipeline')))
   displayName: Deploy to LAB_VISITS
   variables:
   - group: dfc-app-integrationtests-all
