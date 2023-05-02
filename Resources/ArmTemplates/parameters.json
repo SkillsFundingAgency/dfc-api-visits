@@ -43,6 +43,9 @@
       },
       "FunctionAppName": {
         "value": "__FunctionAppName__"
+      },
+      "appInsightsInstrumentationKey": {
+        "value": "__appInsightsInstrumentationKey__" 
       }
     }
   }

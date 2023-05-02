@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
+      "appInsightsInstrumentationKey":{
+        "type": "string"
+      },
       "appSharedResourceGroup": {
         "type": "string"
       },
@@ -48,7 +51,8 @@
       "appServicePlanName": "[concat(variables('resourcePrefix'), '-asp')]",
       "appServicePlanResourceGroup": "[concat(variables('resourcePrefix'),'-rg')]",
       "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
-      "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-api-visits'))]"
+      "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-api-visits'))]",
+      "FunctionAppInsightInstrumentationKey":"[parameters('appInsightsInstrumentationKey')]"
     },
     "resources": [
       {
@@ -82,27 +86,7 @@
             }
           }
         }
-      },
-      {
-        "apiVersion": "2017-05-10",
-        "name": "[parameters('FunctionAppInsightName')]",
-        "type": "Microsoft.Resources/deployments",
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'application-insights.json')]",
-            "contentVersion": "1.0.0.0"
-          },
-          "parameters": {
-            "appInsightsName": {
-              "value": "[parameters('FunctionAppInsightName')]"
-            },
-            "attachedService": {
-              "value": ""
-            }
-          }
-        }
-      },
+      },      
       {
         "apiVersion": "2017-05-10",
         "name": "[parameters('FunctionAppName')]",
@@ -156,7 +140,7 @@
                 },
                 {
                   "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                  "value": "[reference(parameters('FunctionAppInsightName')).outputs.InstrumentationKey.value]"
+                  "value": "[variables('FunctionAppInsightInstrumentationKey')]"
                 },
                 {
                   "name": "Neo4j__Endpoints__0__Enabled",
