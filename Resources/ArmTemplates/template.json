@@ -161,10 +161,7 @@
               ]
             }
           }
-        },
-        "dependsOn": [
-          "[parameters('FunctionAppInsightName')]"
-        ]
+        }
       }
     ],
     "outputs": {
