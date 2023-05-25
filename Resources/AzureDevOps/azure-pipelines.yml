@@ -52,7 +52,7 @@ stages:
         TestSuffix: UnitTests
 
 - stage: DeployToDevVisits
-  condition: (succeeded)
+  condition: succeeded()
   displayName: Deploy to DEV_VISITS
   variables:
   - group: dfc-app-integrationtests-all
